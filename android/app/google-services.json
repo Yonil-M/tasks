@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "404880918158",
-    "project_id": "primer-firebase-799a0",
-    "storage_bucket": "primer-firebase-799a0.appspot.com"
+    "project_number": "1096467263793",
+    "project_id": "codigo-task-19be5",
+    "storage_bucket": "codigo-task-19be5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:404880918158:android:521bf4588e9228c2182bdf",
+        "mobilesdk_app_id": "1:1096467263793:android:1911600ffde1d93ef70010",
         "android_client_info": {
-          "package_name": "com.livcode.tasks"
+          "package_name": "com.livcode.firetasks"
         }
       },
       "oauth_client": [
         {
-          "client_id": "404880918158-17etb8jsb869kcgjkam0rjd3vp42ordi.apps.googleusercontent.com",
+          "client_id": "1096467263793-jjjauqev9o65sgkhvfg5g3t0q0amaf26.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBl4vqFaIArKQNX6zW6Oxtvce59tkxVGKM"
+          "current_key": "AIzaSyBNeML_d5wYJ63YPjMLowtPbwCv2jHFj-o"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "404880918158-17etb8jsb869kcgjkam0rjd3vp42ordi.apps.googleusercontent.com",
+              "client_id": "1096467263793-jjjauqev9o65sgkhvfg5g3t0q0amaf26.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

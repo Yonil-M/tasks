@@ -1,4 +1,4 @@
-package com.livcode.tasks
+package com.livcode.firetasks
 
 import io.flutter.embedding.android.FlutterActivity
 

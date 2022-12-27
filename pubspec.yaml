@@ -1,4 +1,4 @@
-name: tasks
+name: firetasks
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.3.0
   cloud_firestore: ^4.1.0
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:

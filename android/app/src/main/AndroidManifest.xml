@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.livcode.tasks">
+    package="com.livcode.firetasks">
    <application
-        android:label="tasks"
+        android:label="firetasks"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

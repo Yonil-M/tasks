@@ -1,44 +1,172 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firetasks/models/task_model.dart';
+import 'package:firetasks/ui/general/colors.dart';
+import 'package:firetasks/ui/widgets/bottom_page.dart';
+import 'package:firetasks/ui/widgets/general_widget.dart';
+import 'package:firetasks/ui/widgets/item_task_widget.dart';
+import 'package:firetasks/ui/widgets/tasks_form_widget.dart';
+import 'package:firetasks/ui/widgets/texField_normalWidget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
 
- CollectionReference tasksReference= FirebaseFirestore.instance.collection('tasks');
+  final TextEditingController _searchController=TextEditingController();
 
+  CollectionReference tasksReference=FirebaseFirestore.instance.collection("tasks");
 
-
+  showTaskForm(BuildContext context){
+    showModalBottomSheet(
+      context: context, 
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder:(BuildContext context) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: TaskFormWidget(),
+        );
+      },);
+  }
+  
   @override
   Widget build(BuildContext context) {
+    
 
-   
 
     return Scaffold(
-      appBar: AppBar(title: Text("Tasks"),),
+      //appBar: AppBar(
+        //title: Text("Firebase and store"),),
+    /*body: StreamBuilder(
+      stream:tasksReference.snapshots(),
+      builder: (BuildContext context,AsyncSnapshot snap) {
+        if(snap.hasData){
+          QuerySnapshot collection=snap.data;
+          List<QueryDocumentSnapshot> docs=collection.docs;
+          List<Map<String,dynamic>> docsMap=docs.map((e)=>e.data()as Map<String,dynamic>).toList();
+          print(docsMap);
+          return ListView.builder(
+            itemCount: docsMap.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(docsMap[index]["title"]),
+              );
+            },
+          );
+        }
+        return Center(child: CircularProgressIndicator(),);
+      },
+    ),*/
+    backgroundColor: kBrandSegundaryColor,
+    floatingActionButton: InkWell(
+      onTap: () {
+        showTaskForm(context);
+      },borderRadius: BorderRadius.circular(14.0),
 
-      body: StreamBuilder(
-        stream: tasksReference.snapshots(),
-        builder:(BuildContext context,AsyncSnapshot snap) {
-          if(snap.hasData){
-            QuerySnapshot collection=snap.data;
-            List<QueryDocumentSnapshot> docs=collection.docs;
-            List<Map<String,dynamic>> docsMap=docs.map((e)=>e.data()as Map<String,dynamic>).toList();
-            print(docsMap);
-            return ListView.builder(
-              itemCount: docsMap.length,
-              itemBuilder: (BuildContext context,int  index) {
-                return ListTile(
-                  title: Text(docsMap[index]["title"]),
-                );
-                
-              },
-            );
-          }
-
-          return Center(child: CircularProgressIndicator(),);
-          
-        }, 
+      child: Container(
+        padding:const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8.0),
+        decoration: BoxDecoration(
+          color: kBrandPrimaryColor,
+          borderRadius: BorderRadius.circular(14.0)
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.add,color: Colors.white,),
+            Text("Nueva Tarea",style: TextStyle(
+              color: Colors.white,
+            ),),
+          ],
+        ),
       ),
+    ),
 
+    body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14.0,vertical: 18.0),
+            width: double.infinity,
+            decoration: BoxDecoration(
+               color: Colors.white,
+               borderRadius: BorderRadius.circular(30.0),
+            boxShadow: [BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 12.0,
+            offset: const Offset(4, 4),
+            )],
+          
+            ),
+           
+            
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Bienvenido Yonil",style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w500,
+                  color: kBrandPrimaryColor,
+                ),),
+
+                Text("Mis tareas",style: TextStyle(
+                  fontSize: 36.0,
+                  fontWeight: FontWeight.w600,
+                  color: kBrandPrimaryColor,
+                ),),
+                divider10(),
+                TextFieldNormalWidget(hintText:"Buscar tarea..." ,icon:Icons.search,controller:_searchController , ),
+              ],
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.all(14.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+          Text(" Todas mis tareas",
+          style: TextStyle(
+            fontSize: 14.0,
+            fontWeight: FontWeight.w600,
+            color: kBrandPrimaryColor.withOpacity(0.9),
+          ),),
+            StreamBuilder(
+              stream: tasksReference.snapshots(),
+              builder:(BuildContext context,AsyncSnapshot snap) {
+                if(snap.hasData){
+
+                  List<TaskModel> tasks=[];
+                QuerySnapshot collection=snap.data;
+                /*collection.docs.forEach((element) { 
+                  Map<String,dynamic> myMap=element.data()as Map<String,dynamic>;
+                  tasks.add(TaskModel.fromJson(myMap));
+                });*/
+                //tasks=collection.docs.map((e)=> TaskModel.fromJson(e.data()as Map<String,dynamic>)).toList();
+              tasks=collection.docs.map((e){
+                TaskModel task=TaskModel.fromJson(e.data()as Map<String,dynamic>);
+                task.id=e.id;
+                return task;
+                }).toList();
+
+                return ListView.builder(
+                  itemCount: tasks.length,
+                  shrinkWrap: true,
+                  physics:const ScrollPhysics(),
+                  itemBuilder: (BuildContext context,int index) {
+                    return ItemTaskWidget(
+                      taskModel: tasks[index],
+                    );
+                  },
+                  );
+                }
+                return loadingWidget();
+              },
+              ),
+            
+           ],
+            ),)
+ 
+        ],
+      ),
+    ),
     );
   }
 }

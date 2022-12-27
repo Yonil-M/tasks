@@ -1,6 +1,6 @@
 {
-    "name": "tasks",
-    "short_name": "tasks",
+    "name": "firetasks",
+    "short_name": "firetasks",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
